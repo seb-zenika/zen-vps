@@ -1,0 +1,15 @@
+---
+- hosts: all
+  remote_user: root
+
+  roles:
+     - docker-NC
+
+  vars:
+    password: $1$SomeSalt$08FKx76sNa/FGLYNGmoFI0
+
+  tasks:
+    - name: Create guest user "zenguest"
+      user: name=zenguest group=docker password={{password}}
+
+

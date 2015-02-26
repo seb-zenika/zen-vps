@@ -1,0 +1,20 @@
+Vagrant.configure(2) do |config|
+
+  config.vm.box = "digital_ocean"
+
+  config.vm.hostname = 'seb-test-vagrant'
+  config.ssh.private_key_path = "~/.ssh/id_rsa"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  
+  config.vm.provider :digital_ocean do |provider|
+    provider.token = ENV['DO_TOKEN']
+    provider.image = "ubuntu-14-10-x64"
+    provider.size = '512MB'
+    provider.region = "lon1"
+    provider.ssh_key_name = "Vagrant"
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "docker-nightclazz.yml"
+  end
+end

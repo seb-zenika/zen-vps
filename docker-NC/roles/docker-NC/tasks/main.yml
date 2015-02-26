@@ -1,0 +1,20 @@
+- name: Fail if host distribution is not Ubuntu
+  fail: 
+    msg: "{{ ansible_distribution }} is not an Ubuntu"
+  when: "ansible_distribution not in ['Ubuntu']"
+
+- name: Fail if not a Ubuntu "Trusty"
+  fail: 
+    msg: "{{ ansible_distribution_version }} is not an acceptable version of Ubuntu for this role"
+  when: "ansible_distribution_version not in ['14.04', '14.10']"
+
+- name: Install package apt-transport-https
+  apt:
+    pkg: apt-transport-https
+    state: latest
+    update_cache: yes
+    cache_valid_time: 600
+
+- name: Install Docker-maintained Package
+  shell: >
+    curl -sSL https://get.docker.com/ubuntu/ | sudo sh
