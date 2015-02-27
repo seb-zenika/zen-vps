@@ -1,6 +1,8 @@
 
 **Spin up a Digital Ocean VPS**
 
+
+
 Tested on a linux guest Debian 8.0 and Vagrant 1.7.2
 
 1. Setup environment variable DO_TOKEN with your Digital Ocean Personal Access Token
@@ -9,9 +11,8 @@ Tested on a linux guest Debian 8.0 and Vagrant 1.7.2
 
 1. Open the Vagrantfile and make sure values of provider.image and provider.size suit your needs
 1. Spin up the VPS
-```
-vagrant up --provider=digital_ocean
-```
+
+        vagrant up --provider=digital_ocean
 
 *Options*
 
