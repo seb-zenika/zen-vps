@@ -1,8 +1,17 @@
+
+instance_count = ENV['DO_VPS_CNT'].to_i
+instance_count = 1 if ENV['DO_VPS_CNT'].nil? || ENV['DO_VPS_CNT'].empty?
+
+image_size = ENV['DO_SIZE']
+image_size = '512MB' if image_size.nil? || image_size.empty?
+
+puts "Spinning up #{instance_count} instances of VMs"
+puts "Image memory size is #{image_size}"
+
 Vagrant.configure(2) do |config|
 
   config.vm.box = "digital_ocean"
 
-  config.vm.hostname = 'seb-test-vagrant'
   config.ssh.private_key_path = "~/.ssh/id_rsa"
   config.vm.synced_folder ".", "/vagrant", disabled: true
   
@@ -17,4 +26,12 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "docker-nightclazz.yml"
   end
+
+  instance_count.times do |i|
+    instance_id = "VPS-#{i}"
+    config.vm.define instance_id do |instance|
+      instance.vm.hostname = "#{instance_id}-NC-docker"
+    end
+  end
+
 end
