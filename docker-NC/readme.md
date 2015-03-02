@@ -9,7 +9,7 @@ Tested on a linux guest Debian 8.0 and Vagrant 1.7.2
 
         export DO_TOKEN={YOUR_PERSONAL_ACCESS_TOKEN}
 
-1. Open the Vagrantfile and make sure values of provider.image and provider.size suit your needs
+1. Open the Vagrantfile and make sure values of provider.image suit your needs
 1. Spin up the VPS
 
         vagrant up --provider=digital_ocean
