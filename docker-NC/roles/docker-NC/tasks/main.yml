@@ -10,7 +10,7 @@
 
 - name: Install package apt-transport-https
   apt:
-    pkg: apt-transport-https
+    name: apt-transport-https
     state: latest
     update_cache: yes
     cache_valid_time: 600
@@ -22,11 +22,31 @@
 - name: Install Docker Machine
   shell: >
     curl -L https://github.com/docker/machine/releases/download/v0.1.0/docker-machine_linux-amd64 > /usr/local/bin/docker-machine
-- shell: >
-    chmod +x /usr/local/bin/docker-machine
+- command: chmod +x /usr/local/bin/docker-machine
 
 - name: Install Docker Compose
   shell: >
     curl -L https://github.com/docker/compose/releases/download/1.1.0/docker-compose-Linux-x86_64 > /usr/local/bin/docker-compose
-- shell: >
-    chmod +x /usr/local/bin/docker-compose
+- command: chmod +x /usr/local/bin/docker-compose
+
+# Virtualbox install
+
+- name: Enable multiverse repository
+  apt_repository: repo="{{item}}" update_cache=no #"done in next step
+  register: multiverse_installed
+  when: ansible_distribution == 'Ubuntu'
+  with_items:
+    - 'deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates multiverse'
+
+- apt: update_cache=yes
+  when: multiverse_installed | changed
+
+- name: Install package virtualbox
+  apt: 
+    name: virtualbox
+    state: latest
+    update_cache: yes
+    cache_valid_time: 600
