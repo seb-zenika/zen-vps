@@ -1,9 +1,19 @@
 
-**Spin up a Digital Ocean VPS**
+Spin up a Digital Ocean VPS
+==========================
 
+###Setup
+Tested on a linux guest Debian 8.0
 
+Software required :
+* vagrant 1.7.2 with digital ocean plugin
 
-Tested on a linux guest Debian 8.0 and Vagrant 1.7.2
+    `vagrant plugin install vagrant-digitalocean`
+
+* ansible 1.7.2
+
+Usage
+-----------------
 
 1. Setup environment variable DO_TOKEN with your Digital Ocean Personal Access Token
 
@@ -14,7 +24,7 @@ Tested on a linux guest Debian 8.0 and Vagrant 1.7.2
 
         vagrant up --provider=digital_ocean
 
-*Options*
+###Options
 
 Set up these environment variables to customize the operation :
 
